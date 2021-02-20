@@ -1,0 +1,15 @@
+1. Ge layer
+    TECH.PPLAYER.WG.CORE = PPLayer(TECH.PROCESS.WG, TECH.PURPOSE.LF.LINE, name="WG_COR")  # core of the waveguide
+    TECH.PPLAYER.WG.CLADDING = PPLayer(TECH.PROCESS.WG, TECH.PURPOSE.LF_AREA, name="WG_CLAD") # cladding of the waveguide (etched Silicon)
+    (TECH.PROCESS.WG    , TECH.PURPOSE.LF.LINE    ) : (4, 2),    # core
+    (TECH.PROCESS.WG    , TECH.PURPOSE.LF_AREA    ) : (4, 9),    # cladding
+
+2. recess deep etching layer
+
+boolean layer:
+    TECH.PPLAYER.NONE.DOC = PPLayer(TECH.PROCESS.NONE, TECH.PURPOSE.DOC, name="NONE_DOC") # Just  for documentation purposes.
+    (TECH.PROCESS.NONE   , TECH.PURPOSE.DOC)     : (100, 0),
+recess:
+    TECH.PPLAYER.HFW = PPLayer(TECH.PROCESS.HFW, TECH.PURPOSE.DRAWING, name="HFW") # HF windows (drawn = window is open = HF is applied)
+    (TECH.PROCESS.HFW   , TECH.PURPOSE.DRAWING ) : (7, 0),
+
