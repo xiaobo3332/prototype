@@ -13,3 +13,8 @@ recess:
     TECH.PPLAYER.HFW = PPLayer(TECH.PROCESS.HFW, TECH.PURPOSE.DRAWING, name="HFW") # HF windows (drawn = window is open = HF is applied)
     (TECH.PROCESS.HFW   , TECH.PURPOSE.DRAWING ) : (7, 0),
 
+3.Al layer
+
+TECH.PPLAYER.CONTACT.PILLAR = PPLayer(TECH.PROCESS.CON, TECH.PURPOSE.DRAWING, name="CON_DRW") # Pillars for the the contact between metal one and silicide.
+    # CONTACT
+    (TECH.PROCESS.CON, TECH.PURPOSE.DRAWING) : (45,0),

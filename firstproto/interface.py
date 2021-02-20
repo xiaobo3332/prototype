@@ -55,7 +55,6 @@ class Interface(i3.PCell):
             mapping = {generated1: self.layer}
             elems = i3.get_elements_for_generated_layers(elems, mapping)
 
-#git
             return elems
 
 
@@ -199,28 +198,27 @@ class PI(i3.PCell):
 
             return elems
 
+
 # PI(pocket=False, tilt=False).Layout.view.write_gdsii("PI.gds")
 # PI(pocket=True, tilt=False).Layout.view.write_gdsii("PI.gds")
 
 
-#Al mask
+# Al mask
 
 class AL_PI(i3.PCell):
-    _name_prefix = "ALPI"
+    _name_prefix = "AL_PI"
 
     # Center of the structure
     position = i3.Coord2Property(default=(0.0, 0.0))
 
     # Layer
-    layer = i3.LayerProperty(default=i3.TECH.PPLAYER.HFW)
+    layer = i3.LayerProperty(default=i3.TECH.PPLAYER.CONTACT.PILLAR)
     layer_bool = i3.LayerProperty(default=i3.TECH.PPLAYER.NONE.DOC)
 
     # Mesa parameters
     length = i3.PositiveNumberProperty(default=7000.0)
     width = i3.PositiveNumberProperty(default=630.0)
 
-    pocket = i3.BoolProperty(default=False)
-    tilt = i3.BoolProperty(default=False)
 
     # Recess label
     label = i3.StringProperty(default="PI_")
@@ -231,22 +229,20 @@ class AL_PI(i3.PCell):
             # Center of the structure
             (x0, y0) = self.position
 
-            elems += i3.Rectangle(layer=self.layer, center=(x0 + 6500, y0 + 1000 + (3000 - self.width) / 4),
-                                  box_size=(3000-40*2, 3000-40*2))
+            elems += i3.Rectangle(layer=self.layer, center=(1500-20, 2500),
+                                  box_size=(3000 - 40, 3000 - 40 * 2))
 
             elems += i3.Rectangle(layer=self.layer,
-                                  center=(x0 + 6500, y0 + 1000 + self.width + (3000 - self.width) * 3 / 4),
-                                  box_size=(self.length, (3000 - self.width) / 2))
+                                  center=(x0 + 6500-40, 2500),
+                                  box_size=(7000, self.width-40*2))
 
-            elems += i3.SRef(reference=Interface(pocket=self.pocket, tilt=self.tilt))
-
-            # for i in range(7):
-            #     elems += i3.Rectangle(layer=self.layer,
-            #                           center=(10000 - 725 - i * 750, 1000 + (3000 - self.width) / 2 + 185),
-            #                           box_size=(50, 50))
-            #     elems += i3.Rectangle(layer=self.layer,
-            #                           center=(10000 - 725 - i * 750, 1000 + (3000 - self.width) / 2 + self.width - 185),
-            #                           box_size=(50, 50))
+            for i in range(7):
+                elems += i3.Rectangle(layer=self.layer_bool,
+                                      center=(10000 - 725 - i * 750, 1000 + (3000 - self.width) / 2 + 185),
+                                      box_size=(130, 130))
+                elems += i3.Rectangle(layer=self.layer_bool,
+                                      center=(10000 - 725 - i * 750, 1000 + (3000 - self.width) / 2 + self.width - 185),
+                                      box_size=(130, 130))
             # if self.pocket:
             #     self.label += "WP"
             # if self.tilt:
@@ -259,8 +255,10 @@ class AL_PI(i3.PCell):
             #                         font=2,
             #                         height=700.0)
             #
-            # generated1 = self.layer - self.layer_bool
-            # mapping = {generated1: self.layer}
-            # elems = i3.get_elements_for_generated_layers(elems, mapping)
+            generated1 = self.layer - self.layer_bool
+            mapping = {generated1: self.layer}
+            elems = i3.get_elements_for_generated_layers(elems, mapping)
 
             return elems
+
+AL_PI().Layout.view.write_gdsii("AL_PI.gds")
