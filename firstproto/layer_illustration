@@ -18,3 +18,19 @@ recess:
 TECH.PPLAYER.CONTACT.PILLAR = PPLayer(TECH.PROCESS.CON, TECH.PURPOSE.DRAWING, name="CON_DRW") # Pillars for the the contact between metal one and silicide.
     # CONTACT
     (TECH.PROCESS.CON, TECH.PURPOSE.DRAWING) : (45,0),
+
+4.SiN Layer
+
+TECH.PPLAYER.SIL.LINE = PPLayer(TECH.PROCESS.SIL, TECH.PURPOSE.DRAWING, name="SIL_DRW") # Silicide layer
+    # SIL
+    (TECH.PROCESS.SIL, TECH.PURPOSE.DRAWING) : (44,0),
+
+
+
+"""""""""Alignmarker""""""""""
+
+5. recess deep etching layer
+
+TECH.PPLAYER.V12.PILLAR = PPLayer(TECH.PROCESS.V12 , TECH.PURPOSE.DRAWING, name="V12_PILLAR") # Pillars for the V12 vias
+    # VIA 12
+    (TECH.PROCESS.V12, TECH.PURPOSE.DRAWING ) : (43, 0),

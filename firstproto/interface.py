@@ -203,7 +203,12 @@ class PI(i3.PCell):
 # PI(pocket=True, tilt=False).Layout.view.write_gdsii("PI.gds")
 
 
-# Al mask
+"""
+
+Al mask
+
+"""
+
 
 class AL_PI(i3.PCell):
     _name_prefix = "AL_PI"
@@ -219,22 +224,18 @@ class AL_PI(i3.PCell):
     length = i3.PositiveNumberProperty(default=7000.0)
     width = i3.PositiveNumberProperty(default=630.0)
 
-
-    # Recess label
-    label = i3.StringProperty(default="PI_")
-
     class Layout(i3.LayoutView):
 
         def _generate_elements(self, elems):
             # Center of the structure
             (x0, y0) = self.position
 
-            elems += i3.Rectangle(layer=self.layer, center=(1500-20, 2500),
+            elems += i3.Rectangle(layer=self.layer, center=(1500 - 20, 2500),
                                   box_size=(3000 - 40, 3000 - 40 * 2))
 
             elems += i3.Rectangle(layer=self.layer,
-                                  center=(x0 + 6500-40, 2500),
-                                  box_size=(7000, self.width-40*2))
+                                  center=(x0 + 6500 - 40, 2500),
+                                  box_size=(self.length, self.width - 40 * 2))
 
             for i in range(7):
                 elems += i3.Rectangle(layer=self.layer_bool,
@@ -243,22 +244,168 @@ class AL_PI(i3.PCell):
                 elems += i3.Rectangle(layer=self.layer_bool,
                                       center=(10000 - 725 - i * 750, 1000 + (3000 - self.width) / 2 + self.width - 185),
                                       box_size=(130, 130))
-            # if self.pocket:
-            #     self.label += "WP"
-            # if self.tilt:
-            #     self.label += "WT"
-            # elems += i3.PolygonText(layer=self.layer_bool,
-            #                         text=self.label,
-            #
-            #                         coordinate=(6000, 4000),
-            #                         # alignment=(i3.TEXT_ALIGN_LEFT, i3.TEXT_ALIGN_LEFT),
-            #                         font=2,
-            #                         height=700.0)
-            #
+
             generated1 = self.layer - self.layer_bool
             mapping = {generated1: self.layer}
             elems = i3.get_elements_for_generated_layers(elems, mapping)
 
             return elems
 
-AL_PI().Layout.view.write_gdsii("AL_PI.gds")
+
+# AL_PI().Layout.view.write_gdsii("AL_PI.gds")
+
+class AL_NP(i3.PCell):
+    _name_prefix = "AL_NP"
+
+    # Center of the structure
+    position = i3.Coord2Property(default=(0.0, 0.0))
+
+    # Layer
+    layer = i3.LayerProperty(default=i3.TECH.PPLAYER.CONTACT.PILLAR)
+    layer_bool = i3.LayerProperty(default=i3.TECH.PPLAYER.NONE.DOC)
+
+    # Mesa parameters
+    length = i3.PositiveNumberProperty(default=7000.0)
+    width = i3.PositiveNumberProperty(default=330.0)
+
+    pillar = i3.BoolProperty(default=False)
+
+    class Layout(i3.LayoutView):
+
+        def _generate_elements(self, elems):
+
+            # Center of the structure
+            (x0, y0) = self.position
+
+            elems += i3.Rectangle(layer=self.layer, center=(1500 - 20, 2500),
+                                  box_size=(3000 - 40, 3000 - 40 * 2))
+
+            elems += i3.Rectangle(layer=self.layer,
+                                  center=(x0 + 6500 - 40, 2500),
+                                  box_size=(self.length, self.width - 40 * 2))
+
+            if self.pillar:
+                for i in range(7):
+                    elems += i3.Rectangle(layer=self.layer_bool,
+                                          center=(10000 - 725 - i * 750, 1000 + (3000 - self.width) / 2 + 30),
+                                          box_size=(130, 140))
+                    elems += i3.Rectangle(layer=self.layer_bool, center=(
+                        10000 - 725 - i * 750, 1000 + (3000 - self.width) / 2 + self.width - 30),
+                                          box_size=(130, 140))
+
+            generated1 = self.layer - self.layer_bool
+            mapping = {generated1: self.layer}
+            elems = i3.get_elements_for_generated_layers(elems, mapping)
+            return elems
+
+
+# AL_NP(width=330).Layout.view.write_gdsii("AL_NP.gds")
+
+"""
+
+SiN mask
+
+"""
+
+
+class SiN_PI(i3.PCell):
+    _name_prefix = "SiN_PI"
+
+    # Center of the structure
+    position = i3.Coord2Property(default=(0.0, 0.0))
+
+    # Layer
+    layer = i3.LayerProperty(default=i3.TECH.PPLAYER.SIL.LINE)
+    layer_bool = i3.LayerProperty(default=i3.TECH.PPLAYER.NONE.DOC)
+
+    # Mesa parameters
+    length = i3.PositiveNumberProperty(default=7000.0)
+    width = i3.PositiveNumberProperty(default=630.0)
+
+    tilt_0 = i3.BoolProperty(default=False)
+
+    class Layout(i3.LayoutView):
+
+        def _generate_elements(self, elems):
+            # Center of the structure
+            (x0, y0) = self.position
+
+            elems += i3.Rectangle(layer=self.layer, center=(1500 - 20, 2500),
+                                  box_size=(3000 - 40, 3000 - 40 * 2))
+            if self.tilt_0:
+                elems += i3.Rectangle(layer=self.layer,
+                                      center=(x0 + 6500 - 40 + 20 + 7.5, 2500),
+                                      box_size=(self.length + 40 + 15, self.width - 40 * 2))
+            else:
+                elems += i3.Rectangle(layer=self.layer,
+                                      center=(x0 + 6500 - 40 + 20 + 5, 2500),
+                                      box_size=(self.length + 40 + 10, self.width - 40 * 2))
+
+            for i in range(7):
+                elems += i3.Rectangle(layer=self.layer_bool,
+                                      center=(10000 - 725 - i * 750, 1000 + (3000 - self.width) / 2 + 185),
+                                      box_size=(130, 130))
+                elems += i3.Rectangle(layer=self.layer_bool,
+                                      center=(10000 - 725 - i * 750, 1000 + (3000 - self.width) / 2 + self.width - 185),
+                                      box_size=(130, 130))
+
+            generated1 = self.layer - self.layer_bool
+            mapping = {generated1: self.layer}
+            elems = i3.get_elements_for_generated_layers(elems, mapping)
+
+            return elems
+
+
+# AL_PI().Layout.view.write_gdsii("AL_PI.gds")
+
+class SiN_NP(i3.PCell):
+    _name_prefix = "SiN_NP"
+
+    # Center of the structure
+    position = i3.Coord2Property(default=(0.0, 0.0))
+
+    # Layer
+    layer = i3.LayerProperty(default=i3.TECH.PPLAYER.SIL.LINE)
+    layer_bool = i3.LayerProperty(default=i3.TECH.PPLAYER.NONE.DOC)
+
+    # Mesa parameters
+    length = i3.PositiveNumberProperty(default=7000.0)
+    width = i3.PositiveNumberProperty(default=330.0)
+
+    pillar = i3.BoolProperty(default=False)
+    tilt_0 = i3.BoolProperty(default=False)
+
+    class Layout(i3.LayoutView):
+
+        def _generate_elements(self, elems):
+
+            # Center of the structure
+            (x0, y0) = self.position
+
+            elems += i3.Rectangle(layer=self.layer, center=(1500 - 20, 2500),
+                                  box_size=(3000 - 40, 3000 - 40 * 2))
+
+            if self.tilt_0:
+                elems += i3.Rectangle(layer=self.layer,
+                                      center=(x0 + 6500 - 40 + 20 + 7.5, 2500),
+                                      box_size=(self.length + 40 + 15, self.width - 40 * 2))
+            else:
+                elems += i3.Rectangle(layer=self.layer,
+                                      center=(x0 + 6500 - 40 + 20 + 5, 2500),
+                                      box_size=(self.length + 40 + 10, self.width - 40 * 2))
+
+            if self.pillar:
+                for i in range(7):
+                    elems += i3.Rectangle(layer=self.layer_bool,
+                                          center=(10000 - 725 - i * 750, 1000 + (3000 - self.width) / 2 + 30),
+                                          box_size=(130, 140))
+                    elems += i3.Rectangle(layer=self.layer_bool, center=(
+                        10000 - 725 - i * 750, 1000 + (3000 - self.width) / 2 + self.width - 30),
+                                          box_size=(130, 140))
+
+            generated1 = self.layer - self.layer_bool
+            mapping = {generated1: self.layer}
+            elems = i3.get_elements_for_generated_layers(elems, mapping)
+            return elems
+
+# AL_NP(width=330).Layout.view.write_gdsii("AL_NP.gds")

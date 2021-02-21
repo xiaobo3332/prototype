@@ -2,7 +2,7 @@ from technologies import silicon_photonics
 import ipkiss3.all as i3
 from picazzo3.routing.place_route import PlaceComponents
 from MMI22 import my_dc
-from interface import NP, PI
+from interface import NP, PI, AL_PI, AL_NP, SiN_NP, SiN_PI
 
 
 # dc_10 = my_dc(gap_inc_vec=[390, 398, 406], name="ring1")
@@ -80,18 +80,62 @@ class my_exe(PlaceComponents):
         recess10 = PI(pocket=False, tilt=False)
         recess11 = PI(pocket=True, tilt=False)
 
-        MMI22_list.append(recess0)
-        MMI22_list.append(recess1)
-        MMI22_list.append(recess2)
-        MMI22_list.append(recess3)
-        MMI22_list.append(recess4)
-        MMI22_list.append(recess5)
-        MMI22_list.append(recess6)
-        MMI22_list.append(recess7)
-        MMI22_list.append(recess8)
-        MMI22_list.append(recess9)
-        MMI22_list.append(recess10)
-        MMI22_list.append(recess11)
+        for i in range(0, 12, 1):
+            print(i)
+            _inst = locals()['recess{}'.format(i)]
+            MMI22_list.append(_inst)
+
+        # MMI22_list.append(recess0)
+        # MMI22_list.append(recess1)
+        # MMI22_list.append(recess2)
+        # MMI22_list.append(recess3)
+        # MMI22_list.append(recess4)
+        # MMI22_list.append(recess5)
+        # MMI22_list.append(recess6)
+        # MMI22_list.append(recess7)
+        # MMI22_list.append(recess8)
+        # MMI22_list.append(recess9)
+        # MMI22_list.append(recess10)
+        # MMI22_list.append(recess11)
+
+        Al0 = AL_NP(width=338)
+        Al1 = AL_NP(width=338)
+        Al2 = AL_NP(width=338)
+        Al3 = AL_NP(pillar=True)
+        Al4 = AL_NP(pillar=True)
+        Al5 = AL_NP(pillar=True)
+        Al6 = AL_NP()
+        Al7 = AL_NP()
+        Al8 = AL_NP(width=338, pillar=True)
+        Al9 = AL_NP(width=338, pillar=True)
+        Al10 = AL_PI()
+        Al11 = AL_PI()
+        # _ = [Al0, Al1, Al2, Al3, Al4, Al5, Al6, Al7, Al8, Al9, Al10, Al11]
+        #
+        # for i in range(0,12,1):
+        #     # _[i].append(i)
+        #     MMI22_list.append(_[i])
+        for i in range(0, 12, 1):
+            print(i)
+            _inst = locals()['Al{}'.format(i)]
+            MMI22_list.append(_inst)
+
+        SiN0 = SiN_NP(width=338)
+        SiN1 = SiN_NP(width=338)
+        SiN2 = SiN_NP(width=338, tilt_0=True)
+        SiN3 = SiN_NP(pillar=True)
+        SiN4 = SiN_NP(pillar=True)
+        SiN5 = SiN_NP(pillar=True, tilt_0=True)
+        SiN6 = SiN_NP()
+        SiN7 = SiN_NP()
+        SiN8 = SiN_NP(width=338, pillar=True)
+        SiN9 = SiN_NP(width=338, pillar=True)
+        SiN10 = SiN_PI()
+        SiN11 = SiN_PI()
+        for i in range(0, 12, 1):
+            print(i)
+            _inst = locals()['SiN{}'.format(i)]
+            MMI22_list.append(_inst)
 
         return MMI22_list
 
@@ -123,9 +167,34 @@ class my_exe(PlaceComponents):
             trans['CHILD11'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 3))
             trans['CHILD12'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 4))
             trans['CHILD13'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 5))
+            trans['CHILD14'] = (-15000, 0 + row * -1)
+            trans['CHILD15'] = (-15000, 0 + row * 0)
+            trans['CHILD16'] = (-15000, 0 + row * 1)
+            trans['CHILD17'] = (-15000, 0 + row * 2)
+            trans['CHILD18'] = (-15000, 0 + row * 3)
+            trans['CHILD19'] = (-15000, 0 + row * 4)
+            trans['CHILD20'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 0))
+            trans['CHILD21'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 1))
+            trans['CHILD22'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 2))
+            trans['CHILD23'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 3))
+            trans['CHILD24'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 4))
+            trans['CHILD25'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 5))
+            trans['CHILD26'] = (-15000, 0 + row * -1)
+            trans['CHILD27'] = (-15000, 0 + row * 0)
+            trans['CHILD28'] = (-15000, 0 + row * 1)
+            trans['CHILD29'] = (-15000, 0 + row * 2)
+            trans['CHILD30'] = (-15000, 0 + row * 3)
+            trans['CHILD31'] = (-15000, 0 + row * 4)
+            trans['CHILD32'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 0))
+            trans['CHILD33'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 1))
+            trans['CHILD34'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 2))
+            trans['CHILD35'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 3))
+            trans['CHILD36'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 4))
+            trans['CHILD37'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 5))
+
             return trans
 
 
-final = my_exe(name="final")
-final_layout = final.Layout()
-final_layout.write_gdsii("execute.gds")
+# final = my_exe(name="final")
+# final_layout = final.Layout()
+# final_layout.write_gdsii("execute.gds")

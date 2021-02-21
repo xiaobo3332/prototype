@@ -7,7 +7,6 @@ from picazzo3.filters.mmi.cell import MMI2x2Tapered
 
 
 class my_dc(PlaceAndAutoRoute):
-
     DC_list = i3.ChildCellListProperty(default=[])
     gap_inc_vec = i3.ListProperty(default=[], doc="Length of MMI")
     WG1 = i3.ChildCellProperty(doc="", locked=True)
@@ -16,7 +15,6 @@ class my_dc(PlaceAndAutoRoute):
     mmi_trace_template = i3.WaveguideTemplateProperty()
     mmi_access_template = i3.WaveguideTemplateProperty()
     width = i3.PositiveNumberProperty(doc="width of ports", default=15)
-
 
     def _default_wg_t1(self):
         wg_t1 = WireWaveguideTemplate(name="port_{}".format(str(self.width)))
@@ -46,12 +44,12 @@ class my_dc(PlaceAndAutoRoute):
 
     def _default_mmi_trace_template(self):
         mmi_trace_template = WireWaveguideTemplate(name="MMI_tt")
-        mmi_trace_template.Layout(core_width=20.0, cladding_width=20.0 + 2*12)  # MMI_width
+        mmi_trace_template.Layout(core_width=20.0, cladding_width=20.0 + 2 * 12)  # MMI_width
         return mmi_trace_template
 
     def _default_mmi_access_template(self):
         mmi_access_template = WireWaveguideTemplate(name="MMI_at")
-        mmi_access_template.Layout(core_width=9.0, cladding_width=9.0 + 2*12)
+        mmi_access_template.Layout(core_width=9.0, cladding_width=9.0 + 2 * 12)
         return mmi_access_template
 
     def _default_DC_list(self):
@@ -96,7 +94,6 @@ class my_dc(PlaceAndAutoRoute):
             print counter
             # child_cells['straight' + str(counter)] = self.WG1
             child_cells['taper' + str(counter)] = self.WG2
-
 
         for counter, child in enumerate(self.DC_list):
             print 'child number' + str(counter)
@@ -164,38 +161,59 @@ class my_dc(PlaceAndAutoRoute):
             bend_radius = 300
             return bend_radius
 
-        def _generate_elements(self, elems):
-            #
-            # elems += i3.PolygonText(layer=i3.TECH.PPLAYER.WG.TEXT,
-            #                         text='Name={}_{}'.format(self.cell.dc.name, self.cell.wg_t1.name),
-            #                         coordinate=(1350.0, 100.0),
-            #                         alignment=(i3.TEXT_ALIGN_LEFT, i3.TEXT_ALIGN_LEFT),
-            #                         font=2,
-            #                         height=20.0)
-            #
-            # elems += i3.PolygonText(layer=i3.TECH.PPLAYER.WG.TEXT,
-            #                         text='Name={}_{}'.format(self.cell.dc2.name, self.cell.wg_t1.name),
-            #                         coordinate=(4650.0, 100.0),
-            #                         alignment=(i3.TEXT_ALIGN_LEFT, i3.TEXT_ALIGN_LEFT),
-            #                         font=2,
-            #                         height=20.0)
+        # def _generate_elements(self, elems):
+        #
+        #
+        #
+        #     elems += i3.PolygonText(layer=i3.TECH.PPLAYER.WG.TEXT,
+        #                             text='Name={}_{}'.format(self.cell.mmi22.get_default_view(i3.LayoutView).name,
+        #                                                      self.cell.wg_t1.name),
+        #                             coordinate=(1300.0, 100.0),
+        #                             alignment=(i3.TEXT_ALIGN_LEFT, i3.TEXT_ALIGN_LEFT),
+        #                             font=2,
+        #                             height=20.0)
+        #
+        #     elems += i3.PolygonText(layer=i3.TECH.PPLAYER.WG.TEXT,
+        #                             text='Name={}_{}'.format(self.cell.mmi22.get_default_view(i3.LayoutView).name,
+        #                                                      self.cell.wg_t1.name),
+        #                             coordinate=(-2000.0, -150.0),
+        #                             alignment=(i3.TEXT_ALIGN_LEFT, i3.TEXT_ALIGN_LEFT),
+        #                             font=2,
+        #                             height=200.0,
+        #                             transformation=i3.Rotation((0.0, 0.0), 90.0))
+        #
+        #     return elems
 
-            # elems += i3.PolygonText(layer=i3.TECH.PPLAYER.WG.TEXT,
-            #                         text='Name={}_R={}_delay={}'.format(name, self.R, self.delay_length),
-            #
-            #                         coordinate=(0.0, -counter * 5 * self.R - 2 * self.R + 50.0  # -100
-            #                                     ),
-            #                         alignment=(i3.TEXT_ALIGN_LEFT, i3.TEXT_ALIGN_LEFT),
-            #                         font=2,
-            #                         height=20.0)
+        def _generate_elements(self, elems):
+            for counter, child in enumerate(self.DC_list):
+                name = child.name
+
+                elems += i3.PolygonText(layer=i3.TECH.PPLAYER.WG.TEXT,
+                                        text="{}_{}".format(name, self.cell.wg_t1.name),
+                                        # coordinate=(1300.0, 100.0),
+                                        alignment=(i3.TEXT_ALIGN_LEFT, i3.TEXT_ALIGN_LEFT),
+                                        font=2,
+                                        height=20.0,
+                                        transformation=i3.Translation((2500, 100 + 10000 * counter))
+                                        )
+
+                elems += i3.PolygonText(layer=i3.TECH.PPLAYER.WG.TEXT,
+                                        text="{}_{}".format(name, self.cell.wg_t1.name),
+                                        # coordinate=(-2000, -150),
+                                        alignment=(i3.TEXT_ALIGN_LEFT, i3.TEXT_ALIGN_LEFT),
+                                        font=2,
+                                        height=200.0,
+                                        transformation=i3.Rotation((0.0, 0.0), 90.0)
+                                                    + i3.Translation((450, -2000 + 10000 * counter))
+                                        )
 
             return elems
 
 
-# dc_10 = my_dc(gap_inc_vec=[390, 398, 406], name="ring1")
+# dc_10 = my_dc(gap_inc_vec=[390.0, 398.0, 406.0], name="ring1")
 # dc_10_layout = dc_10.Layout()
 # # dc_10_layout.visualize(annotate=True)
-# # dc_10_layout.write_gdsii("DC_V4.gds")
+# # dc_10_layout.write_gdsii("MMI22.gds")
 #
 #
 # dc_15 = my_dc(gap_inc_vec=[390, 398, 406],  name="ring2")
