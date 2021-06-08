@@ -104,7 +104,7 @@ class PlaceMarkers(PlaceComponents):
 
         for i in range(0, 3, 1):
             for j in range(0, 3, 1):
-                cell = AlignmentMarkerSet(position=(1500 + i * 8500, 0 + j * 10000))
+                cell = AlignmentMarkerSet(position=(-13500 + i * 13500, 468.5 + j * 10000))
                 MMI22_list.append(cell)
         return MMI22_list
 
@@ -116,53 +116,8 @@ class PlaceMarkers(PlaceComponents):
             print child
         return child_cells
 
-    # class Layout(PlaceComponents.Layout):
-    #
-    #     def _default_child_transformations(self):
-    #         trans = dict()
-    #         row = 5000
-    #         trans["CHILD0"] = (0, 0)
-    #         trans["CHILD1"] = i3.HMirror(2500) - i3.Translation((5000, 0))
-    #         trans['CHILD2'] = (-15000, 0 + row * -1)
-    #         trans['CHILD3'] = (-15000, 0 + row * 0)
-    #         trans['CHILD4'] = (-15000, 0 + row * 1)
-    #         trans['CHILD5'] = (-15000, 0 + row * 2)
-    #         trans['CHILD6'] = (-15000, 0 + row * 3)
-    #         trans['CHILD7'] = (-15000, 0 + row * 4)
-    #         trans['CHILD8'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 0))
-    #         trans['CHILD9'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 1))
-    #         trans['CHILD10'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 2))
-    #         trans['CHILD11'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 3))
-    #         trans['CHILD12'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 4))
-    #         trans['CHILD13'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 5))
-    #         trans['CHILD14'] = (-15000, 0 + row * -1)
-    #         trans['CHILD15'] = (-15000, 0 + row * 0)
-    #         trans['CHILD16'] = (-15000, 0 + row * 1)
-    #         trans['CHILD17'] = (-15000, 0 + row * 2)
-    #         trans['CHILD18'] = (-15000, 0 + row * 3)
-    #         trans['CHILD19'] = (-15000, 0 + row * 4)
-    #         trans['CHILD20'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 0))
-    #         trans['CHILD21'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 1))
-    #         trans['CHILD22'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 2))
-    #         trans['CHILD23'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 3))
-    #         trans['CHILD24'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 4))
-    #         trans['CHILD25'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 5))
-    #         trans['CHILD26'] = (-15000, 0 + row * -1)
-    #         trans['CHILD27'] = (-15000, 0 + row * 0)
-    #         trans['CHILD28'] = (-15000, 0 + row * 1)
-    #         trans['CHILD29'] = (-15000, 0 + row * 2)
-    #         trans['CHILD30'] = (-15000, 0 + row * 3)
-    #         trans['CHILD31'] = (-15000, 0 + row * 4)
-    #         trans['CHILD32'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 0))
-    #         trans['CHILD33'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 1))
-    #         trans['CHILD34'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 2))
-    #         trans['CHILD35'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 3))
-    #         trans['CHILD36'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 4))
-    #         trans['CHILD37'] = i3.Rotation(rotation=180) + i3.Translation((15000, 0 + row * 5))
-    #
-    #         return trans
 
 
-final = PlaceMarkers()
-final_layout = final.Layout()
-final_layout.write_gdsii("AlignmentMarkerSet.gds")
+# final = PlaceMarkers()
+# final_layout = final.Layout()
+# final_layout.write_gdsii("AlignmentMarkerSet.gds")

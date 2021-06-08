@@ -5,7 +5,7 @@
     <content url="file://$USER_HOME$/luceda/samples/ipkiss330/demo/libraries/demolib">
       <sourceFolder url="file://$USER_HOME$/luceda/samples/ipkiss330/demo/libraries/demolib/ipkiss" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 2.7 (ipkiss3) (3)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
