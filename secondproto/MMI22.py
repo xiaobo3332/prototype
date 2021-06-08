@@ -81,13 +81,9 @@ class my_dc(PlaceAndAutoRoute):
             print 'length number ' + str(l)
             print 'dl ' + str(dl)
 
-            cell = MMI2x2Tapered(mmi_trace_template=self.mmi_trace_template,
-                                 input_trace_template=self.mmi_access_template,
-                                 output_trace_template=self.mmi_access_template,
-                                 trace_template=self.trace_template,
-                                 )
+            cell = MMI2112()
 
-            cell.Layout(name="MMI22_l_{}".format(str(self.gap_inc_vec[l])), transition_length=200.0,
+            cell.Layout(name="MMI2112_l_{}".format(str(self.gap_inc_vec2[l])),
                         length=self.gap_inc_vec[l], trace_spacing=11.0
                         )
 
