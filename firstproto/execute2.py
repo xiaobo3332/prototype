@@ -197,6 +197,6 @@ class my_exe2(PlaceComponents):
             return trans
 
 
-# final = my_exe(name="final")
+# final = my_exe2(name="final")
 # final_layout = final.Layout()
-# final_layout.write_gdsii("execute.gds")
+# final_layout.write_gdsii("execute_test.gds")
