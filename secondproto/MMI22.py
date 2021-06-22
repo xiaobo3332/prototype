@@ -17,6 +17,7 @@ class my_dc(PlaceAndAutoRoute):
     mmi_trace_template = i3.WaveguideTemplateProperty()
     mmi_access_template = i3.WaveguideTemplateProperty()
     width = i3.PositiveNumberProperty(doc="width of ports", default=15)
+    cleave = i3.PositiveNumberProperty(doc="tolerance", default=150)
 
     def _default_wg_t1(self):
         wg_t1 = WireWaveguideTemplate(name="port_{}".format(str(self.width)))
@@ -31,13 +32,13 @@ class my_dc(PlaceAndAutoRoute):
         return wg_sm
 
     def _default_WG1(self):
-        WG1 = i3.Waveguide(name="straight{}".format(str(self.width)), trace_template=self.wg_t1)
-        WG1.Layout(shape=[(0.0, 0.0), (150.0, 0.0)])
+        WG1 = i3.Waveguide(name="straight{}_{}".format(str(self.width), str(self.cleave)), trace_template=self.wg_t1)
+        WG1.Layout(shape=[(0.0, 0.0), (self.cleave, 0.0)])
         return WG1
 
     def _default_WG2(self):
         Port = AutoTransitionPorts(
-            name="ports{}".format(str(self.width)),
+            name="ports{}_{}".format(str(self.width), str(self.cleave)),
             contents=self.WG1,
             port_labels=["out"],
             trace_template=self.trace_template)
@@ -178,23 +179,32 @@ class my_dc(PlaceAndAutoRoute):
                                         height=30.0,
                                         transformation=i3.Translation((600, 100 + 6000 * counter))
                                         )
-
-                # elems += i3.PolygonText(layer=i3.TECH.PPLAYER.WG.TEXT,
-                #                         text="{}_{}".format(name, self.cell.wg_t1.name),
-                #                         # coordinate=(-2000, -150),
-                #                         alignment=(i3.TEXT_ALIGN_LEFT, i3.TEXT_ALIGN_LEFT),
-                #                         font=2,
-                #                         height=200.0,
-                #                         transformation=i3.Rotation((0.0, 0.0), 90.0)
-                #                                        + i3.Translation((450, -2000 + 11000 * counter))
-                # #                         )
-                # if counter == 1:
-                #     break
+                for i in range(1,8,1):
+                    elems += i3.PolygonText(layer=i3.TECH.PPLAYER.WG.TEXT,
+                                            text="{}".format(i),
+                                            coordinate=(400, -4400+3000*i),
+                                            font=2,
+                                            height=200.0,
+                                            )
+                for j in range (-1,2,1):
+                    for i in range(0,4,1):
+                        elems += i3.Rectangle(layer=i3.TECH.PPLAYER.WG.TEXT, center=(
+                                    100+j*6000, -3000+100+6000*i),box_size=(100, 100))
+                        elems += i3.Rectangle(layer=i3.TECH.PPLAYER.WG.TEXT, center=(
+                            100+j*6000, -3000 - 100 + 6000 * i), box_size=(100, 100))
+                    elems += i3.Rectangle(layer=i3.TECH.PPLAYER.WG.TEXT, center=(
+                        100+j*6000, -3000 + 100 + 6000 * 3+3000), box_size=(100, 100))
+                    elems += i3.Rectangle(layer=i3.TECH.PPLAYER.WG.TEXT, center=(
+                        100+j*6000, -3000 - 100 + 6000 * 3+3000), box_size=(100, 100))
+                elems += i3.Rectangle(layer=i3.TECH.PPLAYER.WG.TEXT, center=(
+                    300, -3000 + 100 + 6000 * 3 + 3000), box_size=(100, 100))
+                elems += i3.Rectangle(layer=i3.TECH.PPLAYER.WG.TEXT, center=(
+                    300, -3000 - 100 ), box_size=(100, 100))
 
             return elems
 
 
-# dc_10 = my_dc(gap_inc_vec2=[110.0, 110.0, 110.0], name="ring1")
+# dc_10 = my_dc(gap_inc_vec2=[110.0, 110.0, 110.0], name="ring1", cleave=200)
 # dc_10_layout = dc_10.Layout()
 # # dc_10_layout.visualize(annotate=True)
 # # dc_10_layout.write_gdsii("MMI22.gds")
