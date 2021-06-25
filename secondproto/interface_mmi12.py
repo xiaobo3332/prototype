@@ -79,10 +79,11 @@ class NP_mmi12(i3.PCell):
     # Layer
     layer = i3.LayerProperty(default=i3.TECH.PPLAYER.HFW)
     layer_bool = i3.LayerProperty(default=i3.TECH.PPLAYER.NONE.DOC)
+    layer2 = i3.LayerProperty(default=i3.TECH.PPLAYER.WG.TEXT)
 
     # Mesa parameters
-    length = i3.PositiveNumberProperty(default=180)
-    width = i3.PositiveNumberProperty(default=79.0)
+    length = i3.PositiveNumberProperty(default=180.0)
+    width = i3.PositiveNumberProperty(default=120.0)
 
     pillar = i3.BoolProperty(default=False)
     pocket = i3.BoolProperty(default=False)
@@ -98,8 +99,8 @@ class NP_mmi12(i3.PCell):
 
             # Center of the structure
             (x0, y0) = self.position
-            width2 = 338 + 15 + 15
-            elems += i3.Rectangle(layer=self.layer, center=(x0 + 6500 + 2000 + 2000, y0 + 600 + (1800 - width2) / 4),
+            width2 = 450.0
+            elems += i3.Rectangle(layer=self.layer, center=(x0 + 6500 + 2000 + 2000, 600 + (1800 - width2) / 4),
                                   box_size=(3000, (1800 - width2) / 2))
 
             elems += i3.Rectangle(layer=self.layer,
@@ -113,22 +114,24 @@ class NP_mmi12(i3.PCell):
                 for i in range(4):
                     elems += i3.Rectangle(layer=self.layer,
                                           center=(
-                                              10000 - 725 - i * 750 + 2000 + 550, 1316 + self.width / 2),
+                                              10000 - 725 - i * 750 + 2000 + 550, 1275 + self.width / 2),
                                           box_size=(self.length, self.width))
                     elems += i3.Rectangle(layer=self.layer, center=(
-                        10000 - 725 - i * 750 + 2000 + 550, 1684 - self.width / 2),  # change
+                        10000 - 725 - i * 750 + 2000 + 550, 1725 - self.width / 2),  # change
                                           box_size=(self.length, self.width))
+
                     if self.double:
                         elems += i3.Rectangle(layer=self.layer,
                                               center=(
                                                   10000 - 725 - i * 750 + 2000 + 550 - 400,
-                                                  1316 + self.width / 2),
+                                                  1275 + self.width / 2),
                                               box_size=(self.length, self.width))
                         elems += i3.Rectangle(layer=self.layer, center=(
-                            10000 - 725 - i * 750 + 2000 + 550 - 400, 1684 - self.width / 2),
+                            10000 - 725 - i * 750 + 2000 + 550 - 400, 1725 - self.width / 2),
                                               # change
                                               box_size=(self.length, self.width))
-            if self.width > 79:
+
+            if self.width > 120:
                 self.label += "W"
             if self.pocket:
                 self.label += "_WP"
@@ -145,14 +148,34 @@ class NP_mmi12(i3.PCell):
             generated1 = self.layer - self.layer_bool
             mapping = {generated1: self.layer}
             elems = i3.get_elements_for_generated_layers(elems, mapping)
+
+            if self.pillar:
+                for i in range(4):
+                    elems += i3.Rectangle(layer=self.layer2,
+                                          center=(
+                                              10000 - 725 - i * 750 + 2000 + 550, 1275 + self.width / 2),
+                                          box_size=(self.length+10, self.width+10))
+                    elems += i3.Rectangle(layer=self.layer2, center=(
+                        10000 - 725 - i * 750 + 2000 + 550, 1725 - self.width / 2),  # change
+                                          box_size=(self.length+10, self.width+10))
+
+                    if self.double:
+                        elems += i3.Rectangle(layer=self.layer2,
+                                              center=(
+                                                  10000 - 725 - i * 750 + 2000 + 550 - 400,
+                                                  1275 + self.width / 2),
+                                              box_size=(self.length+10, self.width+10))
+                        elems += i3.Rectangle(layer=self.layer2, center=(
+                            10000 - 725 - i * 750 + 2000 + 550 - 400, 1725 - self.width / 2),
+                                              # change
+                                              box_size=(self.length+10, self.width+10))
+
             return elems
 
 
-# NP(width=330, pocket=True).Layout.view.write_gdsii("NP.gds")
 
 
-# NP(width=338, pocket=True, tilt=True).Layout.view.write_gdsii("NP.gds")
-# NP_mmi12(pillar=True, pocket=True, tilt=True, width=94, length=220,).Layout.view.write_gdsii("NO.gds")
+# NP_mmi12(pillar=True, pocket=False, tilt=False).Layout.view.write_gdsii("NO.gds")
 
 
 """
@@ -321,7 +344,7 @@ class SiN_NP(i3.PCell):
 
             elems += i3.Rectangle(layer=self.layer,
                                   center=(10500 - 15 - 10+self.tilt/2, 1500),
-                                  box_size=(3000 + 50+self.tilt, 368-15*2))
+                                  box_size=(3000 + 50+self.tilt, 450-15*2))
 
             # for i in range(4):
             #     elems += i3.Rectangle(layer=self.layer,
@@ -336,21 +359,21 @@ class SiN_NP(i3.PCell):
                 for i in range(4):
                     elems += i3.Rectangle(layer=self.layer_bool,
                                           center=(
-                                              10000 - 725 - i * 750 + 2000 + 550, 1316 + self.width / 2),
-                                          box_size=(self.length+30, self.width+30))
+                                              10000 - 725 - i * 750 + 2000 + 550, 1316 + self.width / 2-11.0/2),
+                                          box_size=(self.length+30, self.width+30+11))
                     elems += i3.Rectangle(layer=self.layer_bool, center=(
-                        10000 - 725 - i * 750 + 2000 + 550, 1684 - self.width / 2),  # change
-                                          box_size=(self.length+30, self.width+30))
+                        10000 - 725 - i * 750 + 2000 + 550, 1684 - self.width / 2+11.0/2),  # change
+                                          box_size=(self.length+30, self.width+30+11))
                     if self.double:
                         elems += i3.Rectangle(layer=self.layer_bool,
                                               center=(
                                                   10000 - 725 - i * 750 + 2000 + 550 - 400,
-                                                  1316 + self.width / 2),
-                                              box_size=(self.length+30, self.width+30))
+                                                  1316 + self.width / 2-11.0/2),
+                                              box_size=(self.length+30, self.width+30+11))
                         elems += i3.Rectangle(layer=self.layer_bool, center=(
-                            10000 - 725 - i * 750 + 2000 + 550 - 400, 1684 - self.width / 2),
+                            10000 - 725 - i * 750 + 2000 + 550 - 400, 1684 - self.width / 2+11.0/2),
                                               # change
-                                              box_size=(self.length+30, self.width+30))
+                                              box_size=(self.length+30, self.width+30+11))
 
             # if self.tilt_0:
             #     elems += i3.Rectangle(layer=self.layer,

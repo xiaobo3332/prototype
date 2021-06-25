@@ -18,8 +18,8 @@ class my_exe2(PlaceComponents):
         dc1_20 = my_dc(gap_inc_vec2=[100.0, 110.0, 120.0], name="ring3", width=20, cleave=250)
         dc2_20 = my_dc(gap_inc_vec2=[100.0, 110.0, 120.0], name="ring4", width=20, cleave=250)
 
-        recess0 = NP_mmi12(pillar=True, pocket=False, tilt=False, width=92, length=210)
-        recess1 = NP_mmi12(pillar=True, pocket=False, tilt=False, width=92, length=210)
+        recess0 = NP_mmi12(pillar=True, pocket=False, tilt=False, width=133.0, length=210)
+        recess1 = NP_mmi12(pillar=True, pocket=False, tilt=False, width=133.0, length=210)
         recess2 = NP_mmi12(pillar=True, pocket=False, tilt=False)
         recess3 = NP_mmi12(pillar=True, pocket=False, tilt=False)
         recess4 = NP_mmi12(pillar=True, pocket=True, tilt=False)
@@ -34,8 +34,8 @@ class my_exe2(PlaceComponents):
         recess12 = NP_mmi12(pillar=True, pocket=True, tilt=True)
         recess13 = NP_mmi12(pillar=True, pocket=True, tilt=False)
 
-        recess14 = NP_mmi12(pillar=True, pocket=False, tilt=False, width=92, length=210, double=False)
-        recess15 = NP_mmi12(pillar=True, pocket=False, tilt=False, width=92, length=210, double=False)
+        recess14 = NP_mmi12(pillar=True, pocket=False, tilt=False, width=133.0, length=210, double=False)
+        recess15 = NP_mmi12(pillar=True, pocket=False, tilt=False, width=133.0, length=210, double=False)
         recess16 = NP_mmi12(pillar=True, pocket=False, tilt=False, double=False)
         recess17 = NP_mmi12(pillar=True, pocket=False, tilt=False, double=False)
         recess18 = NP_mmi12(pillar=True, pocket=True, tilt=False, double=False)

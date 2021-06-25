@@ -28,4 +28,4 @@ class Merge(i3.PCell):
             return elems
 
 
-Merge().Layout.view.write_gdsii("merge_test.gds")
+Merge().Layout.view.write_gdsii("merge_test3.gds")
