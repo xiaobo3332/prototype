@@ -248,10 +248,13 @@ class my_exe2(PlaceComponents):
             elems += i3.Rectangle(layer=i3.TECH.PPLAYER.PPLUS.LINE,
                                   center=(6000, 7500),  # change
                                   box_size=(190, 21000))
+            elems += i3.Rectangle(layer=i3.TECH.PPLAYER.SIL.LINE,
+                                  center=(0, 7500),  # change
+                                  box_size=(210, 21000))
 
             return elems
 
 
 # final = my_exe2(name="final")
 # final_layout = final.Layout()
-# final_layout.write_gdsii("execute_v3.gds")
+# final_layout.write_gdsii("execute_v4.gds")
