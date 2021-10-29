@@ -1,0 +1,113 @@
+1. Ge layer
+    TECH.PPLAYER.WG.CORE = PPLayer(TECH.PROCESS.WG, TECH.PURPOSE.LF.LINE, name="WG_COR")  # core of the waveguide
+    TECH.PPLAYER.WG.CLADDING = PPLayer(TECH.PROCESS.WG, TECH.PURPOSE.LF_AREA, name="WG_CLAD") # cladding of the waveguide (etched Silicon)
+    (TECH.PROCESS.WG    , TECH.PURPOSE.LF.LINE    ) : (4, 2),    # core
+    (TECH.PROCESS.WG    , TECH.PURPOSE.LF_AREA    ) : (4, 9),    # cladding
+
+2. recess deep etching layer
+
+boolean layer:
+    TECH.PPLAYER.NONE.DOC = PPLayer(TECH.PROCESS.NONE, TECH.PURPOSE.DOC, name="NONE_DOC") # Just  for documentation purposes.
+    (TECH.PROCESS.NONE   , TECH.PURPOSE.DOC)     : (100, 0),
+recess:
+    TECH.PPLAYER.HFW = PPLayer(TECH.PROCESS.HFW, TECH.PURPOSE.DRAWING, name="HFW") # HF windows (drawn = window is open = HF is applied)
+    (TECH.PROCESS.HFW   , TECH.PURPOSE.DRAWING ) : (7, 0),
+
+3.Al layer
+
+TECH.PPLAYER.CONTACT.PILLAR = PPLayer(TECH.PROCESS.CON, TECH.PURPOSE.DRAWING, name="CON_DRW") # Pillars for the the contact between metal one and silicide.
+    # CONTACT
+    (TECH.PROCESS.CON, TECH.PURPOSE.DRAWING) : (45,0),
+
+4.SiN Layer
+
+TECH.PPLAYER.SIL.LINE = PPLayer(TECH.PROCESS.SIL, TECH.PURPOSE.DRAWING, name="SIL_DRW") # Silicide layer
+    # SIL
+    (TECH.PROCESS.SIL, TECH.PURPOSE.DRAWING) : (44,0),
+
+
+
+"""""""""Alignmarker""""""""""
+
+5. recess deep etching layer
+
+TECH.PPLAYER.V12.PILLAR = PPLayer(TECH.PROCESS.V12 , TECH.PURPOSE.DRAWING, name="V12_PILLAR") # Pillars for the V12 vias
+    # VIA 12
+    (TECH.PROCESS.V12, TECH.PURPOSE.DRAWING ) : (43, 0),
+
+
+""""""""""final mask"""""""""""
+1. final Ge layer mask
+TECH.PPLAYER.WG.TEXT = PPLayer(TECH.PROCESS.WG, TECH.PURPOSE.DF.TEXT, name="WG_TXT") # text etched in silicon
+    (TECH.PROCESS.WG    , TECH.PURPOSE.DF.TEXT    ) : (4, 15),
+
+2. final recess layer mask
+TECH.PPLAYER.M2.LINE = PPLayer(TECH.PROCESS.M2, TECH.PURPOSE.DRAWING, name="M2_DRW") # metal2 lines/patterns (one datatype only)
+
+        # M2
+    (TECH.PROCESS.M2    , TECH.PURPOSE.DRAWING ) : (42, 0),
+
+3. final Al layer mask (45,0)
+
+4. final SiN layer mask (44,0)
+
+Note:
+1.MMI22.py generate splitter
+2.interface_mmi12.py generate recess, Al and SiN
+3.execute2.py merge structures we need to pattern and transform them to correct coordinate position.
+4.AlignmentMarkerSet.py generate markers and place them to correct coordinate position.
+5.merge.py is to merge structures and alignment markers system.
+6.delete useless layer manually.
+
+
+add markers in cavity ->import2.py -> import class ImportRik into merge.py
+0/0 -> 41/0
+TECH.PPLAYER.M1 = TechnologyTree()
+TECH.PPLAYER.M1.LINE = PPLayer(TECH.PROCESS.M1, TECH.PURPOSE.DRAWING, name="M1_DRW") # metal1 lines/patterns (one datatype only)
+
+   # M1
+    (TECH.PROCESS.M1    , TECH.PURPOSE.DRAWING ) : (41, 0),
+
+
+New layers for DRIE etching facet (secondproto):
+
+    TECH.PPLAYER.PPLUS.LINE = PPLayer(TECH.PROCESS.PPLUS, TECH.PURPOSE.DRAWING, name="PP_DRW") # PLUS implant
+    (TECH.PROCESS.PPLUS , TECH.PURPOSE.DRAWING ) : (13, 0),
+
+
+"""""""""""""6. delete useless layer manually"""""""""
+delete layer4/2
+delete layer4/9
+delete layer7/0
+delete layer43/0
+delete layer100/0
+boolean layer42/0 - layer13/0 = layer42/0
+delete layer13/0
+DONE!
+Layer 2/0 = Markers on laser
+Layer 5/0 = Plating layer (at the laser side)
+Layer 6/0 = recess for the pillars (at the laser side)
+Layer 4/15 = Ge waveguide (negative pattern)
+Layer 42/0 = DRIE recess
+Layer 44/0 = SiN removal
+Layer 45/0 = Al / NiAu metal pattern
+
+20210901
+Ge WG mask
+For shorter wavelength(6.76um) combiner: increase length of MMI from [110,110,110, 100,110,120] to [120,120,120, 110,120,130]
+For higher coupling efficiency: shrink width from 20um to 10um (right two columns)
+
+Al mask
+##### shrink the size of bigsquare from 16.5um to 7um; shrink the size of smallsquare from 11.5um to 3.5um #####
+Rik said it's too small to see, delete one row besides end facet
+Negative: modify four alignment markers
+
+
+20211026
+Al mask + extra pad
+1. Add metal pad 2000X460
+2. 7um->9um   7.5um->9.5um  in script. But in reality, 9X9  9X9  9X9.5  9X8.5
+3. modify eight alignment markers
+
+20211027
+Pillar: 180->160um!
